@@ -6,3 +6,4 @@ token.json
 node_modules/
 *.tmp
 .DS_Store
+# CJ MCP third-party repo (node_modules)/mcp/cj-api-mcp/node_modules/

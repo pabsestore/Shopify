@@ -12,12 +12,32 @@
       "shopify-store": {
         "type": "local",
         "command": ["node", "mcp/shopify-store.cjs"]
+      },
+      "cj-shopify": {
+        "type": "local",
+        "command": ["node", "mcp/cj-shopify.cjs"]
       }
     }
   },
   "permissions": [
     { "action": "shopify_store_delete_*", "resource": "*", "effect": "ask" },
     { "action": "shopify_store_order_cancel", "resource": "*", "effect": "ask" },
-    { "action": "shopify_store_refund_create", "resource": "*", "effect": "ask" }
+    { "action": "shopify_store_refund_create", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_add_to_cart", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_submit_order_to_cart", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_confirm_cart_and_pay", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_pay_by_balance", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_generate_payment_link", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_create_order", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_confirm_order", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_delete_order", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_merge_orders", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_create_dispute", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_cancel_dispute", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_confirm_dispute", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_create_product_connection", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_disconnect_product", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_save_product_to_shop", "resource": "*", "effect": "ask" },
+    { "action": "cj_shopify_configure_webhook", "resource": "*", "effect": "ask" }
   ]
 }
