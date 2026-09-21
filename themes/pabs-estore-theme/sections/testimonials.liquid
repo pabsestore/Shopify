@@ -1,0 +1,28 @@
+<section class="section" style="background:#070B1E">
+  <div class="page-width">
+    <h2 class="section__heading text-center" style="text-align:center">{{ section.settings.title | default: 'Streamers Love Pabs' | escape }}</h2>
+    <div class="testimonial-grid" style="margin-top:18px">
+      <div class="testimonial">
+        <p>"My RGB setup finally looks as good as it performs. The keyboard glow matches the banner perfectly."</p>
+        <cite>— Alex, Twitch Affiliate · Verified Buyer</cite>
+      </div>
+      <div class="testimonial">
+        <p>"Fast 4-day US delivery via Spocket supplier. The mic is studio-clean, no latency on stream."</p>
+        <cite>— Jamie, YouTube Shorts · 12K subs</cite>
+      </div>
+      <div class="testimonial">
+        <p>"That hero banner sold me. Then the gear did. Spec grid actually helped me choose."</p>
+        <cite>— Sam, Kick Creator</cite>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Testimonials — Neon",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Streamers Love Pabs" }
+  ],
+  "presets": [{ "name": "Testimonials — Neon" }]
+}
+{% endschema %}

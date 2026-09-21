@@ -1,0 +1,93 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Pabs eStore — Tech Neon",
+    "theme_version": "1.0.0",
+    "theme_author": "Pabs eStore",
+    "theme_documentation_url": "https://help.shopify.com",
+    "theme_support_url": "https://help.shopify.com"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Header logo (upload pabs-estore-logo.svg)"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon (32x32)"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 80,
+        "max": 260,
+        "step": 10,
+        "unit": "px",
+        "label": "Logo width",
+        "default": 160
+      }
+    ]
+  },
+  {
+    "name": "Colors (Pabs Palette)",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Derived from banner — keep stable"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Background",
+        "default": "#070B1E"
+      },
+      {
+        "type": "color",
+        "id": "color_cyan",
+        "label": "Neon Cyan",
+        "default": "#00E5FF"
+      },
+      {
+        "type": "color",
+        "id": "color_purple",
+        "label": "Neon Purple",
+        "default": "#A855F7"
+      },
+      {
+        "type": "color",
+        "id": "color_green",
+        "label": "Circuit Green",
+        "default": "#22FF88"
+      },
+      {
+        "type": "color",
+        "id": "color_orange",
+        "label": "Chip Orange",
+        "default": "#FF8A00"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Orbitron headings / Space Grotesk body"
+      },
+      {
+        "type": "select",
+        "id": "heading_font",
+        "label": "Heading font",
+        "options": [
+          { "value": "orbitron", "label": "Orbitron (Recommended)" },
+          { "value": "space_grotesk", "label": "Space Grotesk" }
+        ],
+        "default": "orbitron"
+      }
+    ]
+  }
+]

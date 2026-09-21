@@ -30,6 +30,38 @@ node my-script.js                     # run any script that requires('./shopify'
 
 ---
 
+## 1½ · Shopify CLI (theme design work)
+
+Your store has **two domains** — this confused us once, so memorize this:
+
+| Domain | What it is |
+|---|---|
+| `pabs-estore.myshopify.com` | **Primary** — the pretty one, what people type |
+| `nmn0zj-44.myshopify.com` | **Canonical** — the store's real internal subdomain |
+
+The Admin API (our Node scripts / MCP) accepts the **primary** domain.
+The Shopify **CLI** demands the **canonical** one (`nmn0zj-44`). If a CLI
+command says `OAuth callback store does not match`, you used the wrong domain.
+
+The theme lives in `themes/pabs-estore-theme/`, so CLI commands need `--path`:
+
+```bash
+# One-time login (opens the browser, sign in with pabsestore@gmail.com):
+shopify auth login
+shopify store auth -s nmn0zj-44.myshopify.com --scopes read_themes,write_themes
+
+# Daily theme work — ALWAYS use the canonical domain:
+shopify theme dev --path themes/pabs-estore-theme -s nmn0zj-44.myshopify.com   # live preview in browser
+shopify theme pull --path themes/pabs-estore-theme -s nmn0zj-44.myshopify.com # download store theme
+shopify theme push --path themes/pabs-estore-theme -s nmn0zj-44.myshopify.com # upload local theme
+shopify theme check --path themes/pabs-estore-theme                           # validate (no domain needed)
+```
+
+`shopify theme dev` opens a local preview URL — edit a file, save, and the
+browser updates instantly. Push when you're happy.
+
+---
+
 ## 2 · How the Shopify auth works (so you understand it)
 
 Shopify no longer hands out permanent access tokens. Since January 2026,

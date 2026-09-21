@@ -1,0 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "general": {
+    "search": "Search",
+    "cart": "Cart",
+    "close": "Close"
+  },
+  "sections": {
+    "hero-tech": {
+      "name": "Pabs Hero — Neon Tech",
+      "settings": {
+        "image": { "label": "Hero banner image (upload pabs-hero-banner-2048.jpg)" },
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" },
+        "primary_label": { "label": "Primary button label" },
+        "primary_link": { "label": "Primary button link" },
+        "secondary_label": { "label": "Secondary button label" },
+        "secondary_link": { "label": "Secondary button link" }
+      }
+    },
+    "spec-grid": {
+      "name": "Spec Comparison Grid"
+    }
+  }
+}

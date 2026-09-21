@@ -1,0 +1,126 @@
+{% comment %} Product Grid — matches templates/collection.json type: product-grid {% endcomment %}
+<section class="section" style="padding-top:18px">
+  <div class="page-width">
+    <!-- Toolbar -->
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        {% if section.settings.enable_filtering %}
+          <details style="position:relative;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:10px 14px;cursor:pointer">
+            <summary style="list-style:none;font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase">Filter ▾</summary>
+            <div style="position:absolute;top:calc(100% + 8px);left:0;z-index:10;background:#0B1028;border:1px solid rgba(0,229,255,0.18);border-radius:12px;padding:12px;min-width:220px">
+              {% for filter in collection.filters %}
+                <div style="margin-bottom:12px">
+                  <div style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--cyan);margin-bottom:6px">{{ filter.label }}</div>
+                  {% case filter.type %}
+                    {% when 'price_range' %}
+                      <div style="display:flex;gap:8px;align-items:center">
+                        <input type="number" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}" placeholder="Min" style="width:86px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;padding:8px 10px;border-radius:999px">
+                        <span style="color:var(--text-dim)">—</span>
+                        <input type="number" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}" placeholder="Max" style="width:86px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;padding:8px 10px;border-radius:999px">
+                      </div>
+                    {% else %}
+                      {% for value in filter.values %}
+                        <label style="display:flex;gap:8px;align-items:center;font-size:13px;margin:6px 0;color:var(--text-muted)">
+                          <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %}> {{ value.label }} ({{ value.count }})
+                        </label>
+                      {% endfor %}
+                  {% endcase %}
+                </div>
+              {% else %}
+                <div style="font-size:13px;color:var(--text-dim)">No filters for this collection. Add tags/product type to enable.</div>
+              {% endfor %}
+            </div>
+          </details>
+        {% endif %}
+        <span style="align-self:center;color:var(--text-dim);font-size:13px">{{ collection.products_count }} products</span>
+      </div>
+
+      {% if section.settings.enable_sorting %}
+        <label style="display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--text-muted)">
+          Sort
+          <select id="SortBy" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;padding:10px 12px;border-radius:999px">
+            {% for option in collection.sort_options %}
+              <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <script>document.getElementById('SortBy')?.addEventListener('change', function(e){ const url=new URL(window.location); url.searchParams.set('sort_by', e.target.value); window.location=url });</script>
+      {% endif %}
+    </div>
+
+    <!-- Grid -->
+    {% paginate collection.products by section.settings.products_per_page %}
+      {% if collection.products.size == 0 %}
+        <div style="text-align:center;padding:40px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px">
+          <p style="margin:0 0 10px;font-weight:700">No products in this collection</p>
+          <p style="margin:0 0 14px;color:var(--text-muted);font-size:13.5px">Import via DSers/CJdropshipping/Spocket → add to collection "{{ collection.title }}"</p>
+          <a href="{{ routes.collections_url }}" class="btn btn--ghost">Browse all collections</a>
+        </div>
+      {% else %}
+        <div class="product-grid" style="--cols:{{ section.settings.columns_desktop }}">
+          <style>
+            .product-grid{grid-template-columns:repeat(2,1fr)}
+            @media(min-width:750px){ .product-grid{grid-template-columns:repeat(var(--cols),1fr)} }
+          </style>
+          {% for product in collection.products %}
+            <div class="card">
+              <a href="{{ product.url }}">
+                <div style="aspect-ratio:{{ section.settings.image_ratio | default: 'adapt' | replace: 'adapt', '1' }};background:#0B1028;overflow:hidden;{% if section.settings.image_ratio == 'adapt' %}aspect-ratio:1{% endif %}">
+                  {% if product.featured_image %}
+                    {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title, style: 'width:100%;height:100%;object-fit:cover' }}
+                    {% if section.settings.show_secondary_image and product.media[1] %}
+                      <!-- secondary on hover via CSS would need extra, kept simple -->
+                    {% endif %}
+                  {% else %}
+                    <div style="height:100%;display:grid;place-items:center;color:var(--text-dim)">No image</div>
+                  {% endif %}
+                </div>
+                <div style="padding:14px">
+                  {% if section.settings.show_vendor and product.vendor != blank %}
+                    <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim)">{{ product.vendor }}</div>
+                  {% endif %}
+                  <h3 style="margin:4px 0 6px;font-size:14px;font-weight:700;line-height:1.35">{{ product.title | escape }}</h3>
+                  <div class="price">
+                    {% if product.compare_at_price_max > product.price %}
+                      {{ product.price | money }} <s style="color:var(--text-dim);font-weight:500;margin-left:6px;font-size:12px">{{ product.compare_at_price_max | money }}</s>
+                    {% else %}
+                      {{ product.price | money }}
+                    {% endif %}
+                  </div>
+                  {% if section.settings.show_rating and product.metafields.reviews.rating.value != blank %}
+                    <div style="font-size:12px;color:var(--text-dim)">★ {{ product.metafields.reviews.rating.value }}</div>
+                  {% endif %}
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+
+        {% if paginate.pages > 1 %}
+          <div style="display:flex;gap:8px;justify-content:center;margin-top:18px;flex-wrap:wrap">
+            {% if paginate.previous %}<a href="{{ paginate.previous.url }}" class="btn btn--ghost" style="padding:10px 16px">← Previous</a>{% endif %}
+            <span style="align-self:center;color:var(--text-dim);font-size:13px">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+            {% if paginate.next %}<a href="{{ paginate.next.url }}" class="btn btn--ghost" style="padding:10px 16px">Next →</a>{% endif %}
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Grid — Neon",
+  "settings": [
+    { "type": "range", "id": "products_per_page", "min": 8, "max": 24, "step": 4, "default": 16, "label": "Products per page" },
+    { "type": "range", "id": "columns_desktop", "min": 2, "max": 4, "step": 1, "default": 4, "label": "Columns desktop" },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "options": [{ "value": "adapt", "label": "Adapt" }, { "value": "1", "label": "1:1 Square" }, { "value": "0.8", "label": "4:5 Portrait" }], "default": "adapt" },
+    { "type": "checkbox", "id": "show_secondary_image", "label": "Show secondary image on hover (if second media exists)", "default": true },
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": false },
+    { "type": "checkbox", "id": "show_rating", "label": "Show rating", "default": true },
+    { "type": "checkbox", "id": "enable_filtering", "label": "Enable filtering", "default": true },
+    { "type": "checkbox", "id": "enable_sorting", "label": "Enable sorting", "default": true }
+  ],
+  "presets": [{ "name": "Product Grid — Neon" }]
+}
+{% endschema %}

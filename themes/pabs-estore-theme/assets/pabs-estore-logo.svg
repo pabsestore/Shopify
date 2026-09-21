@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 220" role="img" aria-labelledby="title desc">
+<title>Pabs eStore</title>
+<desc>Neon Pabs eStore logo - cyan to purple gradient with glow</desc>
+<defs>
+  <linearGradient id="pabsGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#00E5FF"/>
+    <stop offset="55%" stop-color="#22D3FF"/>
+    <stop offset="100%" stop-color="#A855F7"/>
+  </linearGradient>
+  </defs>
+<!-- Background plate for dark header testing -->
+<!-- Transparent background by default; enable rect for preview -->
+<!-- <rect width="600" height="220" rx="18" fill="#070B1E"/> -->
+<g font-family="'Orbitron', 'Space Grotesk', monospace" text-anchor="middle" dominant-baseline="middle">
+  <!-- Pabs -->
+  <text x="300" y="85" font-size="84" font-weight="800" letter-spacing="3" fill="none" stroke="url(#pabsGrad)" stroke-width="3.5" paint-order="stroke fill" style="stroke-linejoin:round;">Pabs</text>
+  <text x="300" y="85" font-size="84" font-weight="800" letter-spacing="3" fill="#EAFBFF" opacity="0.98">Pabs</text>
+  <!-- eStore -->
+  <text x="300" y="162" font-size="72" font-weight="700" letter-spacing="2.5" fill="none" stroke="url(#pabsGrad)" stroke-width="3" paint-order="stroke fill" style="stroke-linejoin:round;">eStore</text>
+  <text x="300" y="162" font-size="72" font-weight="700" letter-spacing="2.5" fill="#FFF0FF" opacity="0.98">eStore</text>
+</g>
+<!-- subtle circuit trace underline -->
+<g opacity="0.9">
+  <path d="M 110 188 L 170 188 L 180 178 L 420 178 L 430 188 L 490 188" fill="none" stroke="#22FF88" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+  <path d="M 140 195 L 165 195 L 172 188 L 428 188 L 435 195 L 460 195" fill="none" stroke="#00E5FF" stroke-width="1.1" opacity="0.7"/>
+  <circle cx="180" cy="178" r="2.2" fill="#00E5FF"/>
+  <circle cx="420" cy="178" r="2.2" fill="#A855F7"/>
+  <circle cx="172" cy="188" r="1.6" fill="#22FF88"/>
+  <circle cx="428" cy="188" r="1.6" fill="#22FF88"/>
+</g>
+</svg>

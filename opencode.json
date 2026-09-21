@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "timeout": {
+      "startup": 60000
+    },
+    "servers": {
+      "shopify-dev-mcp": {
+        "type": "local",
+        "command": ["node", "mcp/shopify-dev-mcp.cjs"]
+      },
+      "shopify-store": {
+        "type": "local",
+        "command": ["node", "mcp/shopify-store.cjs"]
+      }
+    }
+  },
+  "permissions": [
+    { "action": "shopify_store_delete_*", "resource": "*", "effect": "ask" },
+    { "action": "shopify_store_order_cancel", "resource": "*", "effect": "ask" },
+    { "action": "shopify_store_refund_create", "resource": "*", "effect": "ask" }
+  ]
+}

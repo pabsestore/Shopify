@@ -1,0 +1,195 @@
+{% comment %}
+  Pabs eStore — Main Product
+  Required by templates/product.json (type: main-product)
+  Fixes ZIP upload: was missing, caused "Invalid section type" on /products/*
+  Neon-styled, minimal, compatible with product.json blocks:
+  title, price, rating, variant_picker, quantity_selector, buy_buttons, description, collapsible-content
+{% endcomment %}
+
+<section class="section">
+  <div class="page-width">
+    <div class="product-layout" style="display:grid;gap:28px;grid-template-columns:1fr;align-items:start">
+      <style>
+        @media(min-width:900px){ .product-layout{grid-template-columns:1.15fr 0.9fr} }
+        .product-media{background:linear-gradient(180deg, #0E1533 0%, #0B1028 100%);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;padding:12px}
+        .product-media__main{aspect-ratio:1;background:#0B1028;border-radius:12px;overflow:hidden;display:grid;place-items:center;border:1px solid rgba(255,255,255,0.06)}
+        .product-media__main img{width:100%;height:100%;object-fit:contain}
+        .product-media__thumbs{display:flex;gap:10px;margin-top:12px;overflow:auto;padding-bottom:4px}
+        .product-media__thumbs img{width:72px;height:72px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,0.08);background:#0B1028}
+        .product-info{border:1px solid rgba(255,255,255,0.08);background:linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);border-radius:16px;padding:22px}
+        .product-info h1{font-family:'Orbitron',monospace;letter-spacing:0.06em;text-transform:uppercase;font-size:clamp(22px,3vw,28px);margin:0 0 8px;line-height:1.15}
+        .product-price{color:var(--cyan);font-weight:800;font-size:20px;margin:6px 0 14px}
+        .product-price s{color:var(--text-dim);font-weight:500;margin-left:10px;font-size:14px}
+        .product-form__input{margin:14px 0}
+        .product-form__input label{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:8px;font-weight:700}
+        .product-form__input select, .quantity-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;padding:12px 14px;border-radius:999px;outline:none}
+        .product-form__input select:focus, .quantity-input:focus{border-color:var(--cyan-border);box-shadow:0 0 0 3px rgba(0,229,255,0.18)}
+        .variant-pills{display:flex;flex-wrap:wrap;gap:8px}
+        .variant-pill{padding:9px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:var(--text);font-size:13px;font-weight:600;cursor:pointer}
+        .variant-pill.is-active{border-color:var(--cyan-border);background:rgba(0,229,255,0.14);color:var(--cyan);box-shadow:0 0 12px rgba(0,229,255,0.25)}
+        .buy-buttons{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+        .btn--full{width:100%}
+        .product-desc{color:var(--text-muted);font-size:14px;line-height:1.65;margin-top:16px}
+        .product-desc h3{color:var(--text);font-size:13px;letter-spacing:0.1em;text-transform:uppercase;margin:18px 0 8px}
+        .collapsible{border:1px solid rgba(255,255,255,0.08);border-radius:12px;background:rgba(255,255,255,0.03);margin-top:14px;overflow:hidden}
+        .collapsible summary{padding:14px 16px;cursor:pointer;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-size:12.5px;list-style:none}
+        .collapsible[open] summary{border-bottom:1px solid rgba(255,255,255,0.08)}
+        .collapsible div{padding:14px 16px;color:var(--text-muted);font-size:13.5px}
+      </style>
+
+      {%- assign featured = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+
+      <!-- LEFT: Media -->
+      <div class="product-media">
+        <div class="product-media__main">
+          {% if featured %}
+            {{ featured | image_url: width: 900 | image_tag: loading: 'eager', alt: product.title }}
+          {% elsif product.featured_image %}
+            {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'eager', alt: product.title }}
+          {% else %}
+            <div style="padding:40px;text-align:center;color:var(--text-dim)">No image yet — add media in Admin → Products → {{ product.title }}</div>
+          {% endif %}
+        </div>
+        {% if product.media.size > 1 %}
+          <div class="product-media__thumbs">
+            {% for media in product.media limit: 8 %}
+              {{ media | image_url: width: 200 | image_tag: loading: 'lazy', alt: media.alt | escape }}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- RIGHT: Info + Blocks -->
+      <div class="product-info">
+        {% for block in section.blocks %}
+          {% case block.type %}
+
+            {% when 'title' %}
+              <h1 {{ block.shopify_attributes }}>{{ product.title | escape }}</h1>
+              {% if block.settings.show_vendor and product.vendor != blank %}
+                <div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim)">{{ product.vendor | escape }}</div>
+              {% endif %}
+
+            {% when 'price' %}
+              <div class="product-price" {{ block.shopify_attributes }}>
+                {% if product.compare_at_price_max > product.price %}
+                  {{ product.price | money }} <s>{{ product.compare_at_price_max | money }}</s>
+                  <span style="margin-left:8px;background:var(--purple);color:#fff;font-size:11px;padding:4px 8px;border-radius:999px;letter-spacing:0.08em">SALE</span>
+                {% else %}
+                  {{ product.price | money }}
+                {% endif %}
+              </div>
+
+            {% when 'rating' %}
+              {% if product.metafields.reviews.rating.value != blank %}
+                <div style="font-size:13px;color:var(--text-muted)" {{ block.shopify_attributes }}>
+                  ★ {{ product.metafields.reviews.rating.value }} ({{ product.metafields.reviews.rating_count }} reviews)
+                </div>
+              {% endif %}
+
+            {% when 'variant_picker' %}
+              <div {{ block.shopify_attributes }}>
+                {% unless product.has_only_default_variant %}
+                  {% for option in product.options_with_values %}
+                    <div class="product-form__input">
+                      <label>{{ option.name }}</label>
+                      {% if block.settings.picker_type == 'button' %}
+                        <div class="variant-pills">
+                          {% for value in option.values %}
+                            <label class="variant-pill {% if option.selected_value == value %}is-active{% endif %}">
+                              <input type="radio" name="options[{{ option.name | escape }}]" value="{{ value | escape }}" form="ProductForm-{{ section.id }}" {% if option.selected_value == value %}checked{% endif %} style="display:none">
+                              {{ value }}
+                            </label>
+                          {% endfor %}
+                        </div>
+                      {% else %}
+                        <select name="options[{{ option.name | escape }}]" form="ProductForm-{{ section.id }}">
+                          {% for value in option.values %}<option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>{% endfor %}
+                        </select>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                  <script>
+                    // Simple pill active toggle (no reload, pairs with variant form submit)
+                    document.querySelectorAll('.variant-pill input').forEach(function(r){
+                      r.addEventListener('change', function(){
+                        var group = this.closest('.variant-pills');
+                        group.querySelectorAll('.variant-pill').forEach(function(p){p.classList.remove('is-active')});
+                        this.closest('.variant-pill').classList.add('is-active');
+                      });
+                    });
+                  </script>
+                {% endunless %}
+              </div>
+
+            {% when 'quantity_selector' %}
+              <div class="product-form__input" {{ block.shopify_attributes }}>
+                <label>Quantity</label>
+                <input class="quantity-input" type="number" name="quantity" value="1" min="1" form="ProductForm-{{ section.id }}" style="max-width:120px">
+              </div>
+
+            {% when 'buy_buttons' %}
+              <div class="buy-buttons" {{ block.shopify_attributes }}>
+                {% assign product_form_id = 'ProductForm-' | append: section.id %}
+                {% form 'product', product, id: product_form_id, novalidate: 'novalidate' %}
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                  <button type="submit" name="add" class="btn btn--neon btn--full" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+                    {% if product.selected_or_first_available_variant.available %}Add to Cart — {{ product.price | money }}{% else %}Sold Out{% endif %}
+                  </button>
+                  {% if block.settings.show_dynamic_checkout %}
+                    {{ form | payment_button }}
+                  {% endif %}
+                {% endform %}
+                <div style="font-size:12px;color:var(--text-dim);text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+                  <span><i style="display:inline-block;width:6px;height:6px;border-radius:999px;background:var(--green);box-shadow:0 0 8px var(--green);vertical-align:middle;margin-right:4px"></i>2–7d US / 10–25d global</span>
+                  <span>•</span><span>Free shipping $75+</span>
+                </div>
+              </div>
+
+            {% when 'description' %}
+              <div class="product-desc" {{ block.shopify_attributes }}>
+                {{ product.description }}
+              </div>
+
+            {% when 'collapsible-content' %}
+              <details class="collapsible" {{ block.shopify_attributes }}>
+                <summary>{{ block.settings.heading | default: 'Specs & Compatibility' | escape }}</summary>
+                <div>
+                  {{ block.settings.content | default: product.description }}
+                  {% if block.settings.content == blank %}
+                    <p>Add specs in Customize → Product template → Collapsible block. Example: polling 1K/8K, weight 55g, mic cardioid, RGB 16M.</p>
+                  {% endif %}
+                </div>
+              </details>
+
+          {% endcase %}
+        {% endfor %}
+
+        {% if section.blocks.size == 0 %}
+          <!-- Fallback if merchant wiped blocks -->
+          <h1>{{ product.title }}</h1>
+          <div class="product-price">{{ product.price | money }}</div>
+          {{ product.description }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main Product — Neon",
+  "settings": [],
+  "blocks": [
+    { "type": "title", "name": "Title", "limit": 1, "settings": [{ "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": false }] },
+    { "type": "price", "name": "Price", "limit": 1, "settings": [] },
+    { "type": "rating", "name": "Rating", "limit": 1, "settings": [] },
+    { "type": "variant_picker", "name": "Variant picker", "limit": 1, "settings": [{ "type": "select", "id": "picker_type", "label": "Picker type", "options": [{ "value": "button", "label": "Pills / Buttons" }, { "value": "dropdown", "label": "Dropdown" }], "default": "button" }] },
+    { "type": "quantity_selector", "name": "Quantity", "limit": 1, "settings": [] },
+    { "type": "buy_buttons", "name": "Buy buttons", "limit": 1, "settings": [{ "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout", "default": true }] },
+    { "type": "description", "name": "Description", "limit": 1, "settings": [] },
+    { "type": "collapsible-content", "name": "Collapsible row", "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "Specs & Compatibility" }, { "type": "richtext", "id": "content", "label": "Content" }] }
+  ],
+  "presets": [{ "name": "Main Product — Neon" }]
+}
+{% endschema %}

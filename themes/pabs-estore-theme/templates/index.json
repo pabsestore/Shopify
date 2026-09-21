@@ -1,0 +1,63 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero-tech": {
+      "type": "hero-tech",
+      "settings": {
+        "heading": "LEVEL UP YOUR SETUP",
+        "subheading": "RGB keyboards · Ultralight mice · Studio mics · Capture cards — curated for gaming & streaming battle stations.",
+        "primary_label": "Shop RGB Gear",
+        "primary_link": "/collections/all",
+        "secondary_label": "Streaming Studio",
+        "secondary_link": "/collections/all",
+        "show_circuit_divider": true
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Trending Right Now",
+        "collection": "all",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "show_vendor": false,
+        "show_rating": true
+      }
+    },
+    "spec-grid": {
+      "type": "spec-grid",
+      "settings": {
+        "title": "Battle-Station Spec Check",
+        "subtext": "Neon-tested specs streamers actually care about — polling rate, latency, pickup pattern."
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "title": "Streamers Love Pabs"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Get 10% Off Your First Drop",
+        "text": "Early access to restocks + TikTok-viral RGB finds before they sell out."
+      }
+    }
+  },
+  "order": [
+    "hero-tech",
+    "featured-collection",
+    "spec-grid",
+    "testimonials",
+    "newsletter"
+  ]
+}

@@ -1,0 +1,15 @@
+{% comment %} Main Page — required by templates/page.json (type: main-page) {% endcomment %}
+<section class="section">
+  <div class="page-width">
+    <div style="max-width:840px;margin:0 auto;background:linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px">
+      <h1 style="font-family:'Orbitron',monospace;letter-spacing:0.08em;text-transform:uppercase;margin:0 0 12px">{{ page.title | escape }}</h1>
+      <div class="circuit-divider" style="margin:12px 0 18px"></div>
+      <div style="color:var(--text-muted);line-height:1.7;font-size:14.5px">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{ "name": "Main Page — Neon", "settings": [], "presets": [{ "name": "Main Page — Neon" }] }
+{% endschema %}

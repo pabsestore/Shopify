@@ -1,0 +1,110 @@
+{% comment %}
+  Pabs eStore — Spec Grid
+  Copy-paste: Sections > Add new section > spec-grid.liquid
+{% endcomment %}
+
+<section class="section section--spec-grid" style="background: linear-gradient(180deg, #070B1E 0%, #0A102A 100%);">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <h2 class="section__heading section__heading--cyan">{{ section.settings.title | escape }}</h2>
+    {% endif %}
+    {% if section.settings.subtext != blank %}
+      <p class="section__subtext">{{ section.settings.subtext | escape }}</p>
+    {% endif %}
+
+    <div class="spec-grid">
+      {% for block in section.blocks %}
+        <div class="spec-card" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            <div class="spec-card__icon">{{ block.settings.icon }}</div>
+          {% endif %}
+          <h3 class="spec-card__title">{{ block.settings.title | escape }}</h3>
+          {% if block.settings.value != blank %}
+            <p class="spec-card__value">{{ block.settings.value | escape }}</p>
+          {% endif %}
+          {% if block.settings.meta != blank %}
+            <p class="spec-card__meta">{{ block.settings.meta | escape }}</p>
+          {% endif %}
+        </div>
+      {% else %}
+        <!-- Default specs when no blocks added -->
+        <div class="spec-card">
+          <h3 class="spec-card__title">⚡ Polling Rate</h3>
+          <p class="spec-card__value">8K Wireless · 1ms Latency</p>
+          <p class="spec-card__meta">PAW3950 sensor, 55g carbon fiber. Stream without lag.</p>
+        </div>
+        <div class="spec-card">
+          <h3 class="spec-card__title">🎙️ Pickup Pattern</h3>
+          <p class="spec-card__value">Cardioid · USB-C RGB</p>
+          <p class="spec-card__meta">HyperX QuadCast S style — pop filter + gain dial.</p>
+        </div>
+        <div class="spec-card">
+          <h3 class="spec-card__title">🎧 Surround</h3>
+          <p class="spec-card__value">7.1 RGB · 50mm Drivers</p>
+          <p class="spec-card__meta">26% reorder rate variant vs 6% — merch matters.</p>
+        </div>
+        <div class="spec-card">
+          <h3 class="spec-card__title">📺 Capture</h3>
+          <p class="spec-card__value">4K60 HDR · PCIe/USB</p>
+          <p class="spec-card__meta">AVerMedia / Elgato tier — console to PC streaming.</p>
+        </div>
+        <div class="spec-card">
+          <h3 class="spec-card__title">💡 Ambience</h3>
+          <p class="spec-card__value">RGB Light Bar · 16M Colors</p>
+          <p class="spec-card__meta">TikTok virality driver — setup aesthetics.</p>
+        </div>
+        <div class="spec-card">
+          <h3 class="spec-card__title">🚚 Ship</h3>
+          <p class="spec-card__value">2–7d US/EU · 10–25d Test</p>
+          <p class="spec-card__meta">Spocket vs CJ vs DSers — compare before scaling.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="circuit-divider" style="margin-top: 28px;"></div>
+</section>
+
+{% schema %}
+{
+  "name": "Spec Comparison Grid",
+  "tag": "section",
+  "class": "shopify-section--spec-grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Battle-Station Spec Check"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Neon-tested specs streamers actually care about — polling rate, latency, pickup pattern."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Spec Card",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Spec Title" },
+        { "type": "text", "id": "value", "label": "Value", "default": "Value" },
+        { "type": "textarea", "id": "meta", "label": "Meta", "default": "Description" },
+        { "type": "text", "id": "icon", "label": "Icon emoji (optional)", "default": "⚡" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Spec Comparison Grid",
+      "blocks": [
+        { "type": "spec", "settings": { "title": "Polling Rate", "value": "8K Wireless · 1ms", "meta": "PAW3950, 55g carbon" } },
+        { "type": "spec", "settings": { "title": "Pickup Pattern", "value": "Cardioid · USB-C", "meta": "QuadCast S tier" } },
+        { "type": "spec", "settings": { "title": "Surround", "value": "7.1 RGB · 50mm", "meta": "High reorder = quality" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,29 @@
+<section class="section">
+  <div class="page-width">
+    <div class="newsletter">
+      <div>
+        <h3>{{ section.settings.heading | default: 'Get 10% Off Your First Drop' | escape }}</h3>
+        <p>{{ section.settings.text | default: 'Early access to restocks + TikTok-viral RGB finds.' | escape }}</p>
+      </div>
+      <div style="flex:1;max-width:420px;width:100%">
+        {% form 'customer', class: 'newsletter-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="newsletter-form__field">
+            <input type="email" name="contact[email]" placeholder="Email address" required>
+            <button type="submit" class="btn btn--neon" style="padding:12px 20px;white-space:nowrap">Join</button>
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Newsletter — Neon",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Get 10% Off Your First Drop" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Early access to restocks + TikTok-viral RGB finds before they sell out." }
+  ],
+  "presets": [{ "name": "Newsletter — Neon" }]
+}
+{% endschema %}

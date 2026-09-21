@@ -1,0 +1,174 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#070B1E">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- else -%}
+    <link rel="icon" type="image/svg+xml" href="{{ 'pabs-estore-logo.svg' | asset_url }}">
+  {%- endif -%}
+
+  <title>
+    {{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  {{ content_for_header }}
+
+  <!-- Fonts: Orbitron (display) + Space Grotesk + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+
+  <!-- Preload hero banner if on index -->
+  {% if template.name == 'index' %}
+    <link rel="preload" as="image" href="{{ 'pabs-hero-banner-2048.jpg' | asset_url }}">
+  {% endif %}
+
+  <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+  <style>
+    /* Critical inline for FOUC prevention */
+    body{margin:0;background:#070B1E;color:#E6F1FF}
+  </style>
+</head>
+<body class="template-{{ template.name }} gradient">
+  <a class="skip-to-content" href="#MainContent">Skip to content</a>
+
+  <!-- Announcement Bar -->
+  {% if section.settings.show_announcement == nil %}
+    <div class="announcement-bar">
+      <p class="announcement-bar__text">⚡ FREE SHIPPING ON ORDERS $75+ | 🎮 LEVEL UP YOUR SETUP — NEW RGB DROPS WEEKLY</p>
+    </div>
+  {% endif %}
+
+  <!-- Header -->
+  <header class="header header--sticky" role="banner">
+    <div class="header__inner page-width">
+      <button class="header__menu-toggle" aria-label="Menu" onclick="document.getElementById('MobileNav').classList.toggle('is-open')">
+        <span></span><span></span><span></span>
+      </button>
+
+      <a href="{{ routes.root_url }}" class="header__logo" aria-label="{{ shop.name }}">
+        {% if settings.logo != blank %}
+          <img src="{{ settings.logo | image_url: width: 260 }}" alt="{{ shop.name }}" width="130" height="48" loading="eager" class="header__logo-image">
+        {% else %}
+          <img src="{{ 'pabs-estore-logo.svg' | asset_url }}" alt="{{ shop.name | default: 'Pabs eStore' }}" width="160" height="58" loading="eager" class="header__logo-svg">
+        {% endif %}
+      </a>
+
+      <nav class="header__nav" role="navigation" aria-label="Main">
+        {% for link in linklists.main-menu.links %}
+          <a href="{{ link.url }}" class="header__nav-link {% if link.active %}is-active{% endif %}">{{ link.title }}</a>
+        {% else %}
+          <a href="{{ routes.root_url }}" class="header__nav-link is-active">Home</a>
+          <a href="{{ routes.all_products_collection_url }}" class="header__nav-link">Shop</a>
+          <a href="{{ routes.all_products_collection_url }}" class="header__nav-link">All Products</a>
+          <a href="{{ routes.search_url }}" class="header__nav-link">Search</a>
+          <a href="/policies/privacy-policy" class="header__nav-link">About</a>
+        {% endfor %}
+      </nav>
+
+      <div class="header__icons">
+        <a href="{{ routes.search_url }}" class="header__icon" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20L16.65 16.65"/></svg>
+        </a>
+        <a href="{{ routes.account_url }}" class="header__icon hide-mobile" aria-label="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart" aria-label="Cart ({{ cart.item_count }})">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 20l-5.5-9h17L15 20z"/><path d="M9 20a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM15 20a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/></svg>
+          {% if cart.item_count > 0 %}
+            <span class="cart-count">{{ cart.item_count }}</span>
+          {% endif %}
+        </a>
+      </div>
+    </div>
+    <!-- Mobile Nav Drawer -->
+    <div id="MobileNav" class="mobile-nav">
+      <div class="mobile-nav__inner">
+        <button class="mobile-nav__close" onclick="document.getElementById('MobileNav').classList.remove('is-open')" aria-label="Close menu">✕</button>
+        {% for link in linklists.main-menu.links %}
+          <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+        {% else %}
+          <a href="{{ routes.root_url }}" class="mobile-nav__link">Home</a>
+          <a href="{{ routes.all_products_collection_url }}" class="mobile-nav__link">Shop All</a>
+          <a href="{{ routes.search_url }}" class="mobile-nav__link">Search</a>
+          <a href="/policies/privacy-policy" class="mobile-nav__link">About</a>
+        {% endfor %}
+      </div>
+    </div>
+  </header>
+
+  <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__circuit-divider" aria-hidden="true"></div>
+    <div class="page-width">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="{{ 'pabs-estore-logo.svg' | asset_url }}" alt="Pabs eStore" width="140" height="50" loading="lazy">
+          <p class="footer__tagline">Sleek modern tech for gaming & streaming. Curated RGB gear, studio mics, and battle-station essentials.</p>
+          <div class="footer__social">
+            <a href="#" aria-label="TikTok">TikTok</a>
+            <a href="#" aria-label="Instagram">Instagram</a>
+            <a href="#" aria-label="YouTube">YouTube</a>
+          </div>
+        </div>
+        <div class="footer__links">
+          <h4>Shop</h4>
+          <a href="/collections/all">All Products</a>
+          <a href="/collections/gaming-keyboards">Keyboards</a>
+          <a href="/collections/gaming-mice">Mice</a>
+          <a href="/collections/gaming-headsets">Headsets</a>
+          <a href="/collections/streaming-studio">Streaming Studio</a>
+        </div>
+        <div class="footer__links">
+          <h4>Support</h4>
+          <a href="/pages/shipping-policy">Shipping & Returns</a>
+          <a href="/pages/about">About Us</a>
+          <a href="/pages/contact">Contact</a>
+          <a href="/pages/faq">FAQ</a>
+          <a href="{{ routes.search_url }}">Search</a>
+        </div>
+        <div class="footer__newsletter">
+          <h4>Join the Squad</h4>
+          <p>Get 10% off your first RGB drop + early access to limited restocks.</p>
+          {% form 'customer', class: 'newsletter-form' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="newsletter-form__field">
+              <input type="email" name="contact[email]" placeholder="Email address" required>
+              <button type="submit" class="btn btn--neon">Join</button>
+            </div>
+            {{ form.errors | default_errors }}
+          {% endform %}
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; {{ 'now' | date: "%Y" }} {{ shop.name | default: 'Pabs eStore' }}. All rights reserved. | <a href="/policies/privacy-policy">Privacy</a> • <a href="/policies/terms-of-service">Terms</a></p>
+        <p class="footer__payments">Payments: Shopify Payments • PayPal • Apple Pay • Google Pay</p>
+      </div>
+    </div>
+  </footer>
+
+  {{ content_for_footer }}
+
+  <script>
+    // Sticky header shadow on scroll
+    window.addEventListener('scroll', () => {
+      document.querySelector('.header').classList.toggle('is-scrolled', window.scrollY > 12);
+    }, {passive:true});
+  </script>
+</body>
+</html>

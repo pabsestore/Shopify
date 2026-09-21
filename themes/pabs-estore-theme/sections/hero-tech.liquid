@@ -1,0 +1,142 @@
+{% comment %}
+  Pabs eStore — Hero Tech Section
+  Copy-paste: Shopify Admin > Online Store > Themes > ... > Edit code > Sections > Add new section > hero-tech.liquid
+  Then: Customize > Add section > Pabs Hero — Neon Tech
+{% endcomment %}
+
+<section class="hero-tech" id="shopify-section-{{ section.id }}">
+  <div class="hero-tech__media" aria-hidden="true">
+    {% if section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 2048 | image_tag: loading: 'eager', class: 'hero-tech__image', alt: section.settings.heading | escape }}
+    {% else %}
+      <img src="{{ 'pabs-hero-banner-2048.jpg' | asset_url }}" alt="Pabs eStore neon banner" class="hero-tech__image" loading="eager" width="2048" height="864">
+    {% endif %}
+    <div class="hero-tech__overlay"></div>
+    {% if section.settings.show_circuit_divider %}
+      <div class="hero-tech__circuit"></div>
+    {% endif %}
+  </div>
+
+  <div class="hero-tech__content page-width">
+    {% if section.settings.eyebrow != blank %}
+      <div class="hero-tech__eyebrow">{{ section.settings.eyebrow }}</div>
+    {% else %}
+      <div class="hero-tech__eyebrow">Gaming • Streaming • Battle-Station Ready</div>
+    {% endif %}
+
+    <h1 class="hero-tech__heading">
+      {% if section.settings.heading != blank %}
+        {{ section.settings.heading | escape }}
+      {% else %}
+        <span>LEVEL UP</span> YOUR SETUP
+      {% endif %}
+    </h1>
+
+    {% if section.settings.subheading != blank %}
+      <p class="hero-tech__subheading">{{ section.settings.subheading | escape }}</p>
+    {% else %}
+      <p class="hero-tech__subheading">RGB keyboards · Ultralight mice · Studio mics · Capture cards — curated for gaming & streaming battle stations.</p>
+    {% endif %}
+
+    <div class="hero-tech__actions">
+      {% if section.settings.primary_label != blank %}
+        <a href="{{ section.settings.primary_link | default: '/collections/all' }}" class="btn btn--neon">
+          {{ section.settings.primary_label | escape }}
+        </a>
+      {% else %}
+        <a href="/collections/all" class="btn btn--neon">Shop RGB Gear</a>
+      {% endif %}
+
+      {% if section.settings.secondary_label != blank %}
+        <a href="{{ section.settings.secondary_link | default: '/collections/all' }}" class="btn btn--ghost">
+          {{ section.settings.secondary_label | escape }}
+        </a>
+      {% else %}
+        <a href="/collections/all" class="btn btn--ghost">Streaming Studio</a>
+      {% endif %}
+    </div>
+
+    <div class="hero-tech__trust" role="list">
+      <span><i></i> 2–7d US Shipping (Spocket)</span>
+      <span><i></i> 4.8★ Rated Suppliers</span>
+      <span><i></i> Free Returns 30d</span>
+    </div>
+  </div>
+
+  <div class="hero-tech__divider" aria-hidden="true"></div>
+</section>
+
+{% schema %}
+{
+  "name": "Pabs Hero — Neon Tech",
+  "tag": "section",
+  "class": "shopify-section--hero-tech",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero banner image (upload pabs-hero-banner-2048.jpg)",
+      "info": "2048×864 recommended. Mobile auto-crops to 16:9 center."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Gaming • Streaming • Battle-Station Ready"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "LEVEL UP YOUR SETUP",
+      "info": "Wraps first two words in gradient automatically if you keep default. Use plain text for custom."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "RGB keyboards · Ultralight mice · Studio mics · Capture cards — curated for gaming & streaming battle stations."
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary button label",
+      "default": "Shop RGB Gear"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Primary button link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary button label",
+      "default": "Streaming Studio"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary button link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_circuit_divider",
+      "label": "Show circuit trace overlay",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pabs Hero — Neon Tech",
+      "settings": {
+        "heading": "LEVEL UP YOUR SETUP",
+        "primary_label": "Shop RGB Gear",
+        "secondary_label": "Streaming Studio"
+      }
+    }
+  ]
+}
+{% endschema %}
