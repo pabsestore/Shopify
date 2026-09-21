@@ -1,0 +1,16 @@
+# Force consistent line endings on every device regardless of OS settings
+# (fixes the classic "setup-device.sh: No such file or directory" on Windows clones)
+* text=auto
+
+# Scripts and code must ALWAYS be LF (a CRLF shebang breaks execution)
+*.sh   text eol=lf
+*.js   text eol=lf
+*.mjs  text eol=lf
+*.cjs  text eol=lf
+
+# Docs and configs — LF everywhere too
+*.md         text eol=lf
+*.json       text eol=lf
+*.gitignore  text eol=lf
+*.gitattributes text eol=lf
+.env.example text eol=lf
