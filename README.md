@@ -13,7 +13,8 @@ AI/
 ├── shopify-token.js  CLI: `node shopify-token.js status`
 ├── test.js           connectivity test
 ├── setup-device.sh   bootstrap script for a new device
-├── scripts/          (future) your business scripts
+├── mcp/              MCP servers (CJdropshipping, Shopify store/dev)
+├── scripts/          business scripts (product enrichment, etc.)
 └── README.md         this file
 ```
 
@@ -59,6 +60,33 @@ shopify theme check --path themes/pabs-estore-theme                           # 
 
 `shopify theme dev` opens a local preview URL — edit a file, save, and the
 browser updates instantly. Push when you're happy.
+
+---
+
+## 1¾ · CJ dropshipping (product sourcing)
+
+**Supplier MCP** — the official CJ MCP server runs from `mcp/cj-api-mcp`
+(launcher `mcp/cj-shopify.cjs`, wired into `opencode.json`). Auth is a local
+session file (`~/.cj-mcp-token`, encrypted with `TOKEN_ENCRYPT_KEY` from `.env`).
+Your API key lives in `.env` as `CJ_API_KEY`.
+
+**How product batches work**
+1. Trend research → `search_products` on the live CJ catalog (⚠️ **1 request/second
+   QPS** — never fire CJ searches in parallel).
+2. Margin rule: **retail ≈ 3 × wholesale USD**. Convert to CRC at the current
+   rate (~₡447 per USD in Sep 2026 — it changes; check before pricing).
+3. Create products **published** via the store MCP (`create-product`,
+   `status: "ACTIVE"`), set the CRC price on the variant, then run the
+   enrichment script to attach CJ photos + join the **Trending** collection:
+
+```bash
+node scripts/publish-enrich.cjs   # images + Trending collection for the batch
+```
+
+First batch (Sep 21, 2026): 12 gaming/streaming/tech products live —
+RGB keyboard, 2 mice, RGB headset, 2 lapel mics, phone gimbal, portable
+monitor, smart ring, light bar, LED strip, USB-C hub — all in *Trending*.
+Use the `/trends` command in OpenCode to find the next batch.
 
 ---
 

@@ -220,16 +220,24 @@ async function graphql(query, variables = {}) {
   return body.data;
 }
 
-// REST Admin API — e.g. rest('orders.json?limit=5') or rest('orders/count.json')
-async function rest(apiPath) {
+// REST Admin API — e.g. rest('orders.json?limit=5')
+// With options: rest('products/123.json', { method: 'PUT', body: { product: {...} } })
+async function rest(apiPath, options = {}) {
+  const method = options.method || 'GET';
+  const hasBody = options.body !== undefined;
   const res = await withRetry((token) =>
     fetch(`https://${SHOP}/admin/api/${API_VERSION}/${apiPath}`, {
-      headers: { 'X-Shopify-Access-Token': token },
+      method,
+      headers: {
+        'X-Shopify-Access-Token': token,
+        ...(hasBody ? { 'Content-Type': 'application/json' } : {}),
+      },
+      ...(hasBody ? { body: JSON.stringify(options.body) } : {}),
     }),
-    { label: `REST ${apiPath}` }
+    { label: `REST ${method} ${apiPath}` }
   );
 
-  if (!res.ok) throw new Error(`REST ${apiPath} failed (${res.status}): ${await res.text()}`);
+  if (!res.ok) throw new Error(`REST ${method} ${apiPath} failed (${res.status}): ${await res.text()}`);
   return res.json();
 }
 
