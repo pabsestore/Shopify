@@ -18,11 +18,14 @@ Update it whenever the store materially changes.
 
 ## Store status
 
-- **13 published products live on the storefront** — all in the **Trending**
+- **12 published products live on the storefront** — all in the **Trending**
   collection (id **699828797713**), homepage featured grid = `trending`,
   `products_to_show: 16` (cap was raised from 12 to fit everything; see
   `themes/pabs-estore-theme/templates/index.json`).
 - **No sales yet.** Store starts from zero — every batch matters.
+- **Skull lamp (test item) removed Sep 21, 2026** — it was a test; deleted from
+  admin + storefront (avoided a money-losing product: freight $14.86 on a
+  ₡7,950 retail).
 - Pre-existing **10 draft products** (Aurora keyboard ₡39.99, Velocity mouse,
   Nova headset, Studio mic, 4K60 capture card, ControlDeck stream controller,
   GlowBar light bar, Stride mousepad, Handheld dock kit, VR hygiene kit):
@@ -32,7 +35,7 @@ Update it whenever the store materially changes.
 
 - **Strategy: CR-first for the next 90 days.** Keep base currency **CRC**. US market parked (no LLC / no Shopify Payments / no pre-stock; US de-minimis is dead since 2025-08 for all origins — China-direct to US is discontinued practice).
 - **Payments to set up:** **Tilopay** (primary; cards 4.25%+$0.35, SINPE 2%+$0.35, no monthly fee, 48h onboarding, Shopify plugin) + **PayPal** (fallback/cross-border) + **manual SINPE instructions** (zero-fee local rail). FACTURA ELECTRÓNICA issuer wiring (Hacienda registered ✓; e-invoicing mandatory once sales > ~₡5M/yr).
-- **Fulfillment:** zero inventory — CJ ships direct; CR orders DDU (customer pays IVA 13% + DAI at delivery) at launch, DDP when data justifies. 13 live products already on storefront.
+- **Fulfillment:** zero inventory — CJ ships direct; CR orders DDU (customer pays IVA 13% + DAI at delivery) at launch, DDP when data justifies. 12 live products on storefront (skull lamp removed Sep 21).
 - **Marketing:** no budget — organic only (TikTok/IG Reels, WhatsApp, Spanish SEO, optional Mercado Libre CR). CR conversion baseline 1.2–1.8%.
 - **Batch 2 = HOLD until further notice.** Do not publish pending shortlist.
 
@@ -52,7 +55,7 @@ Update it whenever the store materially changes.
 | 11242085744913 | Monitor Light Bar | — | 18,950 |
 | 11242085777681 | LED Strip (room) | — | 12,950 |
 | 11242085810449 | USB-C Hub | — | 22,950 |
-| 11242089677073 | Halloween Lava Stone Skull Lamp · CJJT2553155 · $5.80 | 7,950 |
+| 11242089677073 | ~~Halloween Lava Stone Skull Lamp~~ *(REMOVED Sep 21 — test item)* | — | — |
 
 Every product carries metafields `cj_mcp` → `sku`, `source_url`, `wholesale_usd`;
 source links + wholesale kept for traceability (needed later for CJ order fulfillment).
@@ -75,9 +78,8 @@ Freight = CJ `freightCalculateTip` CN→CR, cheapest line (CJPacket EUB 12–50d
 | CJJT1064975 M8 mouse | 38.32 | 10.64 | 21,885 | 51,950 | 30,065 | 57.9% | |
 | CJJT1251952 RGB mouse | 7.46 | 7.47 | 6,674 | 10,950 | 4,276 | 39.1% | |
 | CJJJJTJT38669 RGB keyboard | 20.33 | 20.70 | 18,340 | 27,950 | 9,610 | 34.4% | |
-| CJJT2553155 skull lamp | 5.80 | 14.86 | 9,235 | 7,950 | **−1,285** | **−16.2%** | ❌ losing money |
 
-**Actions flagged:** skull lamp underpriced (raise retail ~₡12,400+ or drop); wireless lav mic margin thin (raise to ~₡6,400+). French: freight to CR is heavy for small/heavy items — big levers are cartons & per-kg lines; verify with a real test order.
+**Actions flagged:** wireless lav mic margin thin (raise to ~₡6,400+). ~~Skull lamp~~ — removed Sep 21 (test item, was losing −16.2%). Freight to CR is heavy for small/heavy items — big levers are cartons & per-kg lines; verify with a real test order.
 
 ## Pending / next steps (in order)
 
