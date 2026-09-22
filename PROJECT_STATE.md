@@ -28,6 +28,14 @@ Update it whenever the store materially changes.
   GlowBar light bar, Stride mousepad, Handheld dock kit, VR hygiene kit):
   **ownership decision still pending** — fix/publish or delete (deferred to user).
 
+## Market & payments plan (locked Sep 21, 2026 — see `.opencode/plan/pabs-estore-go-live-cr-first.md`)
+
+- **Strategy: CR-first for the next 90 days.** Keep base currency **CRC**. US market parked (no LLC / no Shopify Payments / no pre-stock; US de-minimis is dead since 2025-08 for all origins — China-direct to US is discontinued practice).
+- **Payments to set up:** **Tilopay** (primary; cards 4.25%+$0.35, SINPE 2%+$0.35, no monthly fee, 48h onboarding, Shopify plugin) + **PayPal** (fallback/cross-border) + **manual SINPE instructions** (zero-fee local rail). FACTURA ELECTRÓNICA issuer wiring (Hacienda registered ✓; e-invoicing mandatory once sales > ~₡5M/yr).
+- **Fulfillment:** zero inventory — CJ ships direct; CR orders DDU (customer pays IVA 13% + DAI at delivery) at launch, DDP when data justifies. 13 live products already on storefront.
+- **Marketing:** no budget — organic only (TikTok/IG Reels, WhatsApp, Spanish SEO, optional Mercado Libre CR). CR conversion baseline 1.2–1.8%.
+- **Batch 2 = HOLD until further notice.** Do not publish pending shortlist.
+
 ## Live products (all Trending, id → title · wholesale · CRC retail)
 
 | Product id | Title | CJ SKU / wholesale USD | Retail CRC |
@@ -51,17 +59,13 @@ source links + wholesale kept for traceability (needed later for CJ order fulfil
 
 ## Pending / next steps (in order)
 
-1. **Batch 2 go-ahead** — shortlist of 10 trending gaming/streaming gadgets was
-   verified on CJ and presented (capture card $18.74, ring light $8.34, RGB USB mic
-   $11.44, boom arm $3.12, RGB headset stand $6.60, RGB mousepad $8.91, BT controller
-   $7.55, 3-in-1 charger $17.44, 1080p webcam $10.93, LCD macro keypad $49.42).
-   **Awaiting user approval** of prices before publishing.
-2. **10 old drafts decision** (fix/publish vs delete).
-3. **Part 4 theme fixes** (approved, not yet done): `columns_desktop` setting,
-   missing collections/search templates, hardcoded `/collections/all` → `routes.*`.
-4. **CJ fulfillment setup** (before real orders): connect Shopify store in CJ account
-   + prepaid CJ balance.
-5. Optional: `/trends` again for batch 3; Halloween seasonal section.
+1. **Payments go-live (CR-first)**: apply to **Tilopay** (ask negotiated rates: SINPE, local card, international card, monthly fee, settlement), enable **PayPal**, add **manual SINPE** instructions payment method. Verify fees from real quotes.
+2. **Factura electrónica**: Hacienda registration done ✓ — pick an authorized issuer and wire it to Shopify orders.
+3. **CR price + landed-cost tables** for the 13 live products using **real CJ freight quotes** (Batch 2 excluded — on hold). Include DAI category warnings (audio/video ~14%, computing accessories ~0%).
+4. **Spanish localization pass** (titles, descriptions, policies) + resolve the 10 old drafts (fix/publish vs delete).
+5. *(deferred — after 1–4)* Content calendar (5 hero products × Reels/TikTok), WhatsApp order flow, optional Mercado Libre CR.
+6. *(deferred — after 1–5)* CJ fulfillment setup (connect store + prepaid balance), CR test order to own address, weekly margin/order tracking.
+7. **Part 4 theme fixes** (approved, not yet done): `columns_desktop` setting, missing collections/search templates, hardcoded `/collections/all` → `routes.*`.
 
 ## Scripts inventory
 
