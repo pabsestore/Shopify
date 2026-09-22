@@ -29,7 +29,7 @@ Rules:
 ### 3. Margin math (3× rule by default)
 - Wholesale is **USD** (CJ_CURRENCY=USD). Store currency is **CRC** — retail price
   displayed on the store must be set in CRC by the user (per product), and CRC is
-  ~550–600 per USD (check current rate before quoting).
+  **~₡447 per USD** (Sep 2026 — check the current rate before quoting).
 - Default: retail ≈ 3 × wholesale USD. Show both: `3× retail (USD)` and the suggested
   CRC equivalent. Final CRC price is **always decided by the user** before publishing.
 
@@ -42,10 +42,20 @@ Create each product **published** (not draft) with `shopify-store.create-product
 - source link (`productUrl`) stored in the product's `vendor` or metafield for traceability
 - tags: category + "trending" + "gaming"/"streaming"/"tech"
 
-### 5. Collection
-Try to add the product to the **"Trending"** collection. The store MCP has no collection
-tool yet — if the collection can't be assigned via MCP, list the product IDs created and
-note "add to Trending collection" as a manual Shopify admin step (or via GraphQL script).
+### 5. Collection + make it live
+Add the product to the **"Trending"** collection (id **699828797713**) and set
+`published_at`. The store MCP has no collection tool, so use the scripts
+(they handle auth + 1.2s CJ pacing):
+
+```bash
+# one item: publish (published_at) + attach image + join Trending:
+node scripts/publish-item.cjs <productId> "<bigImageUrl>" "<alt text>" 699828797713
+
+# batch: images + Trending collection for all ACTIVE items in the batch:
+node scripts/publish-enrich.cjs
+```
+
+Then **verify on the storefront** (`products.json` + homepage show the handle).
 
 ## Sequence guard
 - Show the user a **batch table first** (name, wholesale USD, 3× USD retail, suggested CRC,

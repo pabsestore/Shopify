@@ -1,5 +1,9 @@
 # Pabs Shopify Workspace
 
+> 🧠 **Project memory:** `AGENTS.md` = how we work (auto-loaded by OpenCode every
+> session) · `PROJECT_STATE.md` = current status, products, next steps. Read them
+> first when starting anything.
+
 A small, self-healing workspace for talking to **Pabs eStore** through the
 Shopify Admin API — designed to run on *both* of your devices (this PC and the
 Ubuntu/Termux tablet) with nothing to keep in sync except the code.
