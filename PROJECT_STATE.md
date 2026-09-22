@@ -85,7 +85,7 @@ Freight = CJ `freightCalculateTip` CN→CR, cheapest line (CJPacket EUB 12–50d
 
 ## Pending / next steps (in order)
 
-1. **Payments go-live (CR-first)**: apply to **Tilopay** (BAC OK — bank-agnostic, covers BAC cards + Tasa Cero) — ask negotiated rates (SINPE, local card, international card, monthly fee, settlement); enable **PayPal**; add **manual SINPE** instructions payment method.
+1. **Payments go-live (CR-first)**: **Tilopay quote email SENT Sep 21** ✅ — awaiting pricing reply + 48h validation. Meanwhile: enable **PayPal**, add **manual SINPE** instructions method (both independent of Tilopay). Fee negotiation playbook in `.opencode/plan/tilopay-quote-email.md`.
 2. **Factura electrónica**: Hacienda registered ✓ — options: **ATV free (Hacienda portal, low volume)** vs **FacturaCR / Invoicloud (API)** ≈ ₡5–15k/mo; needs **firma digital (BCCR, ₡5–10k, 2 yrs)** + CABYS codes; wire chosen issuer to Shopify orders.
 3. **DONE ✅ CR landed-cost tables (see above)** — pricing actions done: skull lamp removed, wireless lav mic raised ₡4,950 → ₡6,400 (34% margin) on Sep 21.
 4. **Spanish localization pass** (titles, descriptions, policies) + resolve the 10 old drafts (fix/publish vs delete).
