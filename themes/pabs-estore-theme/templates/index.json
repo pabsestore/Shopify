@@ -26,7 +26,7 @@
       "settings": {
         "title": "Trending Right Now",
         "collection": "trending",
-        "products_to_show": 12,
+        "products_to_show": 16,
         "columns_desktop": 4,
         "show_vendor": false,
         "show_rating": true
