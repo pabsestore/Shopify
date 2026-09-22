@@ -57,11 +57,33 @@ Update it whenever the store materially changes.
 Every product carries metafields `cj_mcp` → `sku`, `source_url`, `wholesale_usd`;
 source links + wholesale kept for traceability (needed later for CJ order fulfillment).
 
+## CR landed-cost (real CJ quotes, Sep 21 2026 — `scripts/landed-cost-cr.cjs`, data `landed-cost-cr.json`)
+
+Freight = CJ `freightCalculateTip` CN→CR, cheapest line (CJPacket EUB 12–50d / Liquid Line 18–35d). Wholesale = metafields `cj_mcp.wholesale_usd`. FX 447. **Land cost excludes duties/IVA** (DDU — customer pays at delivery) and gateway fees.
+
+| SKU | Wholesale $ | Freight $ | Landed ₡ | Retail ₡ | Margin ₡ | % | Note |
+|---|---|---|---|---|---|---|---|
+| CJJT1403910 LED strip | 8.98 | 8.52 | 7,823 | 12,950 | 5,128 | 39.6% | |
+| CJXFLPYP00087 USB-C hub | 18.63 | 4.61 | 10,388 | 22,950 | 12,562 | 54.7% | |
+| CJLE1029103 monitor light bar | 13.43 | 9.16 | 10,098 | 18,950 | 8,852 | 46.7% | |
+| CJZBLXLX15811 smart ring | 15.51 | 2.64 | 8,113 | 21,950 | 13,837 | 63.0% | |
+| CJJT1563363 portable monitor | 114.36 | 20.15 | 60,126 | 154,900 | 94,774 | 61.2% | big ticket |
+| CJYD2856835 gimbal | 23.72 | 13.76 | 16,754 | 31,950 | 15,196 | 47.6% | |
+| CJYD3050336 outdoor lav mic | 7.15 | 5.67 | 5,731 | 9,950 | 4,219 | 42.4% | |
+| CJYD2857251 wireless lav mic | 3.52 | 5.93 | 4,224 | 4,950 | 726 | **14.7%** | ⚠ thin |
+| CJEJ1281901 RGB headset | 12.26 | 15.07 | 12,217 | 16,950 | 4,733 | 27.9% | |
+| CJJT1064975 M8 mouse | 38.32 | 10.64 | 21,885 | 51,950 | 30,065 | 57.9% | |
+| CJJT1251952 RGB mouse | 7.46 | 7.47 | 6,674 | 10,950 | 4,276 | 39.1% | |
+| CJJJJTJT38669 RGB keyboard | 20.33 | 20.70 | 18,340 | 27,950 | 9,610 | 34.4% | |
+| CJJT2553155 skull lamp | 5.80 | 14.86 | 9,235 | 7,950 | **−1,285** | **−16.2%** | ❌ losing money |
+
+**Actions flagged:** skull lamp underpriced (raise retail ~₡12,400+ or drop); wireless lav mic margin thin (raise to ~₡6,400+). French: freight to CR is heavy for small/heavy items — big levers are cartons & per-kg lines; verify with a real test order.
+
 ## Pending / next steps (in order)
 
-1. **Payments go-live (CR-first)**: apply to **Tilopay** (ask negotiated rates: SINPE, local card, international card, monthly fee, settlement), enable **PayPal**, add **manual SINPE** instructions payment method. Verify fees from real quotes.
-2. **Factura electrónica**: Hacienda registration done ✓ — pick an authorized issuer and wire it to Shopify orders.
-3. **CR price + landed-cost tables** for the 13 live products using **real CJ freight quotes** (Batch 2 excluded — on hold). Include DAI category warnings (audio/video ~14%, computing accessories ~0%).
+1. **Payments go-live (CR-first)**: apply to **Tilopay** (BAC OK — bank-agnostic, covers BAC cards + Tasa Cero) — ask negotiated rates (SINPE, local card, international card, monthly fee, settlement); enable **PayPal**; add **manual SINPE** instructions payment method.
+2. **Factura electrónica**: Hacienda registered ✓ — options: **ATV free (Hacienda portal, low volume)** vs **FacturaCR / Invoicloud (API)** ≈ ₡5–15k/mo; needs **firma digital (BCCR, ₡5–10k, 2 yrs)** + CABYS codes; wire chosen issuer to Shopify orders.
+3. **DONE ✅ CR landed-cost tables (see above)** — but **pricing action needed on skull lamp & wireless lav mic** (user decision), then apply via `manage-product-variants`.
 4. **Spanish localization pass** (titles, descriptions, policies) + resolve the 10 old drafts (fix/publish vs delete).
 5. *(deferred — after 1–4)* Content calendar (5 hero products × Reels/TikTok), WhatsApp order flow, optional Mercado Libre CR.
 6. *(deferred — after 1–5)* CJ fulfillment setup (connect store + prepaid balance), CR test order to own address, weekly margin/order tracking.
@@ -78,6 +100,7 @@ source links + wholesale kept for traceability (needed later for CJ order fulfil
 | `scripts/publish-enrich.cjs` | batch: CJ images + join Trending collection (listV2, paced 1.2s) |
 | `scripts/publish-online.cjs` | set `published_at` on ACTIVE products (makes them public) |
 | `scripts/publish-item.cjs` | single item: publish + attach image + optional collection join |
+| `scripts/landed-cost-cr.cjs` | CJ freight quotes CN→CR for all SKUs → landed cost vs retail (paced 1.2s, needs `.env` + CJ token; data `landed-cost-cr.json`) |
 
 Pattern for adding one product (proven with the skull lamp):
 `get_product_detail` (CJ) → `create-product` ACTIVE + `cj_mcp` metafields →
