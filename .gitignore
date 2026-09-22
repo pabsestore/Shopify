@@ -2,6 +2,9 @@
 .env
 token.json
 
+# Local conversation archive (session export) — moves device-to-device via scp, not git
+session-archive.json
+
 # Local noise
 node_modules/
 *.tmp
