@@ -12,6 +12,9 @@
     </div>
 
     {% assign coll = section.settings.collection %}
+    {% if coll == blank or coll.products == null or coll.products.size == 0 %}
+      {% assign coll = collections[section.settings.collection] %}
+    {% endif %}
     {% if coll != blank and coll.products.size > 0 %}
       <div class="product-grid">
         {% for product in coll.products limit: section.settings.products_to_show %}

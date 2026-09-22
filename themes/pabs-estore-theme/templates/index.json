@@ -25,8 +25,8 @@
       "type": "featured-collection",
       "settings": {
         "title": "Trending Right Now",
-        "collection": "all",
-        "products_to_show": 8,
+        "collection": "trending",
+        "products_to_show": 12,
         "columns_desktop": 4,
         "show_vendor": false,
         "show_rating": true
