@@ -73,7 +73,9 @@ Freight = CJ `freightCalculateTip` CN→CR, cheapest line (CJPacket EUB 12–50d
 | CJJT1563363 portable monitor | 114.36 | 20.15 | 60,126 | 154,900 | 94,774 | 61.2% | big ticket |
 | CJYD2856835 gimbal | 23.72 | 13.76 | 16,754 | 31,950 | 15,196 | 47.6% | |
 | CJYD3050336 outdoor lav mic | 7.15 | 5.67 | 5,731 | 9,950 | 4,219 | 42.4% | |
-| CJYD2857251 wireless lav mic | 3.52 | 5.93 | 4,224 | 4,950 | 726 | **14.7%** | ⚠ thin |
+| CJYD2857251 wireless lav mic | 3.52 | 5.93 | 4,224 | ~~4,950~~ **6,400** | 2,176 | **34.0%** | ✅ fixed Sep 21 |
+
+**Actions flagged:** ~~skull lamp~~ removed (test). ~~wireless lav mic~~ raised to ₡6,400 (34% margin, Sep 21). Freight to CR is heavy for small/heavy items — big levers are cartons & per-kg lines; verify with a real test order.
 | CJEJ1281901 RGB headset | 12.26 | 15.07 | 12,217 | 16,950 | 4,733 | 27.9% | |
 | CJJT1064975 M8 mouse | 38.32 | 10.64 | 21,885 | 51,950 | 30,065 | 57.9% | |
 | CJJT1251952 RGB mouse | 7.46 | 7.47 | 6,674 | 10,950 | 4,276 | 39.1% | |
@@ -85,7 +87,7 @@ Freight = CJ `freightCalculateTip` CN→CR, cheapest line (CJPacket EUB 12–50d
 
 1. **Payments go-live (CR-first)**: apply to **Tilopay** (BAC OK — bank-agnostic, covers BAC cards + Tasa Cero) — ask negotiated rates (SINPE, local card, international card, monthly fee, settlement); enable **PayPal**; add **manual SINPE** instructions payment method.
 2. **Factura electrónica**: Hacienda registered ✓ — options: **ATV free (Hacienda portal, low volume)** vs **FacturaCR / Invoicloud (API)** ≈ ₡5–15k/mo; needs **firma digital (BCCR, ₡5–10k, 2 yrs)** + CABYS codes; wire chosen issuer to Shopify orders.
-3. **DONE ✅ CR landed-cost tables (see above)** — but **pricing action needed on skull lamp & wireless lav mic** (user decision), then apply via `manage-product-variants`.
+3. **DONE ✅ CR landed-cost tables (see above)** — pricing actions done: skull lamp removed, wireless lav mic raised ₡4,950 → ₡6,400 (34% margin) on Sep 21.
 4. **Spanish localization pass** (titles, descriptions, policies) + resolve the 10 old drafts (fix/publish vs delete).
 5. *(deferred — after 1–4)* Content calendar (5 hero products × Reels/TikTok), WhatsApp order flow, optional Mercado Libre CR.
 6. *(deferred — after 1–5)* CJ fulfillment setup (connect store + prepaid balance), CR test order to own address, weekly margin/order tracking.
